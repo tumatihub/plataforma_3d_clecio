@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu8n26kgdfhc"]
+[gd_scene load_steps=4 format=3 uid="uid://bu8n26kgdfhc"]
+
+[ext_resource type="Environment" uid="uid://boegygcbum3t3" path="res://world-environment.tres" id="1_5hcs3"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_n6a4e"]
 
@@ -16,3 +18,10 @@ mesh = SubResource("BoxMesh_qm4yg")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.42496, 4.44527)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource("1_5hcs3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.678685, 0.734429, 0, -0.734429, 0.678685, 0, 3.29328, 3.30803)
+shadow_enabled = true
