@@ -9,9 +9,12 @@ const JUMP_VELOCITY = 10.0
 var gravity: float = 0
 var movement_velocity: Vector3
 var rotation_direction: float
+var knockbacked := false
+
 
 func _physics_process(delta: float) -> void:
-	handle_input(delta)
+	if not knockbacked:
+		handle_input(delta)
 	apply_gravity(delta)
 	jump(delta)
 	handle_animation()
@@ -23,11 +26,6 @@ func _physics_process(delta: float) -> void:
 	velocity = applied_velocity
 	
 	move_and_slide()
-	
-	if Vector2(velocity.z, velocity.x).length() > 0:
-		rotation_direction = Vector2(velocity.z, velocity.x).angle()
-	
-	rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
 
 func handle_input(delta):
 	var input := Vector3.ZERO
@@ -35,7 +33,12 @@ func handle_input(delta):
 	input.z = Input.get_axis("move_forward", "move_backward")
 	
 	input = input.rotated(Vector3.UP, view.rotation.y).normalized()
-	velocity = input * SPEED * delta
+	if not knockbacked:
+		velocity = input * SPEED * delta
+		if Vector2(velocity.z, velocity.x).length() > 0:
+			rotation_direction = Vector2(velocity.z, velocity.x).angle()
+	
+		rotation.y = lerp_angle(rotation.y, rotation_direction, delta * 10)
 
 func handle_animation():
 	if is_on_floor():
@@ -45,6 +48,9 @@ func handle_animation():
 			animator.play("Idle", 0.3)
 	else:
 		animator.play("Jump", 0.3)
+	
+	if knockbacked:
+		animator.play("Fall", 0.3)
 	
 	if not is_on_floor() and gravity > 2:
 		animator.play("Fall", 0.3)
@@ -59,3 +65,18 @@ func jump(delta):
 	
 	if gravity > 0 and is_on_floor():
 		gravity = 0
+
+func knockback(impact_point: Vector3, force: Vector3) -> void:
+	force.y = abs(force.y)
+	velocity = force.limit_length(15.0)
+
+func _on_hurtbox_body_entered(body: Node3D) -> void:
+	var body_collision = (body.global_position - global_position)
+	var force = -body_collision
+	force *= 10.0
+	gravity = -5
+	knockback(body_collision, force)
+	knockbacked = true
+	await get_tree().create_timer(0.3).timeout
+	knockbacked = false
+
