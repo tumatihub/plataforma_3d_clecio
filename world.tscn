@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bu8n26kgdfhc"]
+[gd_scene load_steps=11 format=3 uid="uid://bu8n26kgdfhc"]
 
 [ext_resource type="Script" path="res://scripts/view.gd" id="1_3xqy2"]
 [ext_resource type="Environment" uid="uid://boegygcbum3t3" path="res://world-environment.tres" id="1_5hcs3"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="2_102y4"]
 [ext_resource type="PackedScene" uid="uid://kod0awm1ha4o" path="res://Models/actors/models/gobot/model/gobot.glb" id="3_2qap7"]
 [ext_resource type="PackedScene" uid="uid://c0gmblql2eq5e" path="res://prefab/coin.tscn" id="5_hhaw4"]
+[ext_resource type="MeshLibrary" uid="uid://c66m04ok1fpq5" path="res://mesh_library.tres" id="6_hunx5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b1ydw"]
 albedo_color = Color(0.379905, 0.64699, 0.419335, 1)
@@ -79,3 +80,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -7)
 
 [node name="coin7" parent="coins" instance=ExtResource("5_hhaw4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, -7)
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("6_hunx5")
+cell_size = Vector3(1, 1, 1)
+data = {
+"cells": PackedInt32Array(65533, 0, 0, 65532, 0, 0, 65531, 0, 0, 65531, 1, 0, 65531, 2, 0, 65532, 2, 0, 65532, 1, 0, 131067, 0, 2, 131067, 1, 2, 131067, 2, 2, 196603, 0, 2, 196603, 1, 2)
+}
+metadata/_editor_floor_ = Vector3(0, 2, 0)
