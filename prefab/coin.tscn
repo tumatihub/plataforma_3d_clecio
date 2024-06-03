@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0gmblql2eq5e"]
+
+[ext_resource type="PackedScene" uid="uid://be0v6hughbk0h" path="res://blender_assets/godot_coin.glb" id="1_6jcl3"]
+[ext_resource type="Script" path="res://coin.gd" id="1_w3atn"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_3eily"]
+height = 0.3
+radius = 0.35
+
+[node name="coin" type="Area3D"]
+script = ExtResource("1_w3atn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_3eily")
+
+[node name="godot_coin" parent="." instance=ExtResource("1_6jcl3")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
