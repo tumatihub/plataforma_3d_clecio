@@ -63,9 +63,10 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="floor/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_6wd7o")
 
-[node name="player" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26184, 0, 0)
+[node name="player" type="CharacterBody3D" parent="." node_paths=PackedStringArray("view")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.26184, 1.21776, 0)
 script = ExtResource("2_102y4")
+view = NodePath("../camera_pivot")
 metadata/_edit_group_ = true
 
 [node name="gobot" parent="player" instance=ExtResource("3_2qap7")]
